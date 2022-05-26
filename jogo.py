@@ -13,6 +13,7 @@ def jogo(tela):
     grupos['sprites'] = sprites
     grupos['objetos'] = objetos
 
+    bg = Background(tela)
     player = drone(grupos)
     sprites.add(player)
 
@@ -38,6 +39,9 @@ def jogo(tela):
     while state != quit:
         clock.tick(fps)
 
+        bg.update()
+        bg.render(tela)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state = quit
@@ -60,7 +64,7 @@ def jogo(tela):
         sprites.update()
 
         if state == jogando:
-            score += 1
+            score += 1 / 60
             hits = pygame.sprite.spritecollide(player, objetos, True, pygame.sprite.collide_mask)
             if len(hits) > 0:
                 # som
@@ -79,14 +83,11 @@ def jogo(tela):
                 player = drone(grupos)
                 sprites.add(player)
         
-        # ----- Gera saídas
-        tela.fill(black)  # Preenche com a cor branca
-        tela.blit(pygame.image.load(os.path.join(img_dir, 'fundo.png')).convert(), (0, 0))
         # Desenhando meteoros
         sprites.draw(tela)
 
         # Desenhando o score
-        text_surface = pygame.font.Font(os.path.join(font_dir, 'PressStart2P.ttf'), 28).render("{:08d}".format(score), True, yellow)
+        text_surface = pygame.font.Font(os.path.join(font_dir, 'PressStart2P.ttf'), 28).render("{:08d}".format(round(score)), True, yellow)
         text_rect = text_surface.get_rect()
         text_rect.midtop = (width / 2,  10)
         tela.blit(text_surface, text_rect)

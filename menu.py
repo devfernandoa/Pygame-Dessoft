@@ -7,8 +7,11 @@ def menu(tela):
     clock = pygame.time.Clock()
 
     # Carrega o fundo do menu
-    background = pygame.image.load(path.join(img_dir, "menu.jpg")).convert()
+    background = pygame.image.load(path.join(img_dir, "menu2.png")).convert()
     background_rect = background.get_rect()
+    font = pygame.font.Font(path.join(font_dir, 'PressStart2P.ttf'), 40)
+    texto = font.render("Pressione qualquer", True, (255, 255, 255))
+    texto2 = font.render("tecla para jogar", True, (255, 255, 255))
 
     #Sons pra quando a gente tiver musicas
     '''
@@ -31,6 +34,8 @@ def menu(tela):
 
         tela.fill(black)
         tela.blit(background, background_rect)
+        tela.blit(texto, (width/2 - texto.get_width()/2, height/2 - texto.get_height()/2))
+        tela.blit(texto2, (width/2 - texto2.get_width()/2, height/2 + texto.get_height()/2))
         pygame.display.flip()
 
     return state

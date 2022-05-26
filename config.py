@@ -6,17 +6,17 @@ sound_dir = path.join(path.dirname(__file__), 'assets', 'sound')
 font_dir = path.join(path.dirname(__file__), 'assets', 'font')
 
 # Tela
-width = 600
-height = 480
+width = 1200
+height = 960
 
 # Frames por segundo
 fps = 60 
 
 # Dados dos objetos
-obj_width = 50
-obj_height = 38
-drone_width = 50
-drone_height = 38
+obj_width = 100
+obj_height = 76
+drone_width = 100
+drone_height = 76
 
 # Cores
 white = (255, 255, 255)
@@ -29,4 +29,4 @@ yellow = (255, 255, 0)
 # Estados
 Menu = 0
 Jogo = 1
-Quit = 2 
+Quit = 2

@@ -22,13 +22,13 @@ class drone(pygame.sprite.Sprite):
         self.speedy = 0
         keystate = pygame.key.get_pressed()
         if keystate[pygame.K_LEFT]:
-            self.speedx = -8
+            self.speedx = -10
         if keystate[pygame.K_RIGHT]:
-            self.speedx = 8
+            self.speedx = 10
         if keystate[pygame.K_UP]:
-            self.speedy = -8
+            self.speedy = -10
         if keystate[pygame.K_DOWN]:
-            self.speedy = 8
+            self.speedy = 10
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         if self.rect.right > width:
@@ -45,21 +45,20 @@ class Objeto(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(os.path.join(img_dir, 'obj.png')).convert_alpha()
         self.image = pygame.transform.scale(self.image, (obj_width, obj_height))
-        self.image.fill(red)
         self.rect = self.image.get_rect()
         self.rect.y = random.randrange(0, width - obj_width)
-        self.rect.x = random.randrange(-100, -obj_height)
-        self.speedx = random.randrange(-3, 3)
-        self.speedy = random.randrange(2, 9)
+        self.rect.x = random.randrange(-200, -obj_height)
+        self.speedx = random.randrange(-6, 6)
+        self.speedy = random.randrange(4, 18)
 
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         if self.rect.top > height or self.rect.right < 0 or self.rect.left > width:
             self.rect.y = random.randint(0, width - obj_width)
-            self.rect.x = random.randint(-100, -obj_height)
-            self.speedy = random.randint(-3, 3)
-            self.speedx = random.randint(2, 9)
+            self.rect.x = random.randint(-200, -obj_height)
+            self.speedy = random.randint(-6, 6)
+            self.speedx = random.randint(4, 18)
 
 class pegar(pygame.sprite.Sprite):
     def __init__(self, center):
@@ -91,3 +90,29 @@ class pegar(pygame.sprite.Sprite):
                 self.image = self.anim[self.frame]
                 self.rect = self.image.get_rect()
                 self.rect.center = center
+
+class Background():
+      def __init__(self, tela):
+            self.bgimage = pygame.image.load(os.path.join(img_dir, 'bg3.png')).convert_alpha()
+            self.bgimage = pygame.transform.scale(self.bgimage, (width, height))
+            self.rectBGimg = self.bgimage.get_rect()
+ 
+            self.bgY1 = 0
+            self.bgX1 = 0
+ 
+            self.bgY2 = 0
+            self.bgX2 = self.rectBGimg.width
+ 
+            self.moving_speed = 5
+         
+      def update(self):
+        self.bgX1 -= self.moving_speed
+        self.bgX2 -= self.moving_speed
+        if self.bgX1 <= -self.rectBGimg.width:
+            self.bgX1 = self.rectBGimg.width
+        if self.bgX2 <= -self.rectBGimg.width:
+            self.bgX2 = self.rectBGimg.width
+             
+      def render(self, tela):
+         tela.blit(self.bgimage, (self.bgX1, self.bgY1))
+         tela.blit(self.bgimage, (self.bgX2, self.bgY2))
