@@ -11,22 +11,26 @@ def menu(tela):
     background_rect = background.get_rect()
 
     #Sons pra quando a gente tiver musicas
-    '''# Carrega os sons do menu
-    pygame.mixer.music.load(path.join(sound_dir, "menu.ogg"))'''
+    '''
+    # Carrega os sons do menu
+    pygame.mixer.music.load(path.join(sound_dir, "menu.ogg"))
+    pygame.mixer.music.set_volume(0.4)
+    pygame.mixer.music.play(loops=-1)
+    '''
 
     condicao = True
     while True:
         clock.tick(fps)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                state = Quit
+                estado = Quit
                 condicao = False
             if event.type == pygame.KEYUP:
-                state = Jogo
+                estado = Jogo
                 condicao = False
 
         tela.fill(black)
         tela.blit(background, background_rect)
         pygame.display.flip()
 
-    return state 
+    return estado 
