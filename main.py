@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 from config import *
 from menu import *
 from jogo import *

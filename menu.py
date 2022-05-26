@@ -19,18 +19,18 @@ def menu(tela):
     '''
 
     condicao = True
-    while True:
+    while condicao:
         clock.tick(fps)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                estado = Quit
+                state = Quit
                 condicao = False
             if event.type == pygame.KEYUP:
-                estado = Jogo
+                state = Jogo
                 condicao = False
 
         tela.fill(black)
         tela.blit(background, background_rect)
         pygame.display.flip()
 
-    return estado 
+    return state

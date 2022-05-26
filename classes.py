@@ -7,11 +7,12 @@ class drone(pygame.sprite.Sprite):
     def __init__(self, groups):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = pygame.image.load(os.path.join(img_dir, 'playerShip1_orange.png')).convert_alpha()
+        self.image = pygame.image.load(os.path.join(img_dir, 'player.png')).convert_alpha()
         self.image = pygame.transform.scale(self.image, (drone_width, drone_height))
+        self.image = pygame.transform.rotate(self.image, 90)
         self.rect = self.image.get_rect()
-        self.rect.centerx = width / 2
-        self.rect.bottom = height - 10
+        self.rect.centerx = width - 10
+        self.rect.bottom = height / 2
         self.speedx = 0
         self.speedy = 0
         self.groups = groups
@@ -65,7 +66,7 @@ class pegar(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         anim = []
         for i in range(9):
-            arq = os.path.join(img_dir, 'exp{}.png'.format(i))
+            arq = os.path.join(img_dir, 'exp0{}.png'.format(i))
             img = pygame.image.load(arq).convert()
             img = pygame.transform.scale(img, (32, 32))
             anim.append(img)

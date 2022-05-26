@@ -1,4 +1,5 @@
 import pygame
+import time
 from classes import *
 from config import *
 
@@ -23,7 +24,7 @@ def jogo(tela):
     quit = 0
     jogando = 1
     pegando = 2
-    estado = jogando
+    state = jogando
 
     teclas = {}
     score = 0
@@ -34,13 +35,13 @@ def jogo(tela):
     pygame.mixer.music.play(-1)
     '''
 
-    while estado != quit:
+    while state != quit:
         clock.tick(fps)
 
         for event in pygame.event.get():
-            if event.type == pygame.quitUIT:
-                estado = quit
-            if estado == jogando:
+            if event.type == pygame.QUIT:
+                state = quit
+            if state == jogando:
                 if event.type == pygame.KEYDOWN:
 
                     teclas[event.key] = True
@@ -48,8 +49,6 @@ def jogo(tela):
                         player.speedx -= 8
                     if event.key == pygame.K_RIGHT:
                         player.speedx += 8
-                    if event.key == pygame.K_SPACE:
-                        player.shoot()
 
                 if event.type == pygame.KEYUP:
 
@@ -60,28 +59,29 @@ def jogo(tela):
                             player.speedx -= 8
         sprites.update()
 
-        if estado == jogando:
+        if state == jogando:
             score += 1
             hits = pygame.sprite.spritecollide(player, objetos, True, pygame.sprite.collide_mask)
             if len(hits) > 0:
-                pickup.play()
+                # som
+                 # pegar.play()
                 player.kill()
-                pickup = pegar(player.rect.center)
+                pegando = pegar(player.rect.center)
                 sprites.add(pegando)
-                estado = quit
+                state = quit
                 keys_down = {}
                 pegando_tick = pygame.time.get_ticks()
-                duracao = pickup.frame_ticks * len(pickup.explosion_anim) + 400
-        elif estado == pegando:
+                duracao = pegando.frame_rate * len(pegando.anim) + 400
+        elif state == pegando:
             now = pygame.time.get_ticks()
             if now - pegando_tick > duracao:
-                estado = jogando
+                state = jogando
                 player = drone(grupos)
                 sprites.add(player)
-
+        
         # ----- Gera saídas
         tela.fill(black)  # Preenche com a cor branca
-        tela.blit(pygame.image.load(os.path.join(img_dir, 'starfield.png')).convert(), (0, 0))
+        tela.blit(pygame.image.load(os.path.join(img_dir, 'fundo.png')).convert(), (0, 0))
         # Desenhando meteoros
         sprites.draw(tela)
 
@@ -90,3 +90,7 @@ def jogo(tela):
         text_rect = text_surface.get_rect()
         text_rect.midtop = (width / 2,  10)
         tela.blit(text_surface, text_rect)
+
+        pygame.display.update()
+                
+        
