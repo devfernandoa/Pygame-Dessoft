@@ -50,7 +50,7 @@ def jogo(tela):
 
                     teclas[event.key] = True
                     if event.key == pygame.K_LEFT:
-                        player.speedx -= 8
+                        player.speedx -= 8 
                     if event.key == pygame.K_RIGHT:
                         player.speedx += 8
 
@@ -61,7 +61,7 @@ def jogo(tela):
                             player.speedx += 8
                         if event.key == pygame.K_RIGHT:
                             player.speedx -= 8
-        sprites.update()
+        sprites.update(score)
 
         if state == jogando:
             score += 1 / 60

@@ -17,7 +17,7 @@ class drone(pygame.sprite.Sprite):
         self.speedy = 0
         self.groups = groups
 
-    def update(self):
+    def update(self, score):
         self.speedx = 0
         self.speedy = 0
         keystate = pygame.key.get_pressed()
@@ -47,18 +47,18 @@ class Objeto(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (obj_width, obj_height))
         self.rect = self.image.get_rect()
         self.rect.y = random.randrange(0, width - obj_width)
-        self.rect.x = random.randrange(-200, -obj_height)
+        self.rect.x = random.randrange(-150, -obj_height)
         self.speedx = random.randrange(-6, 6)
         self.speedy = random.randrange(4, 18)
 
-    def update(self):
+    def update(self, score):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
-        if self.rect.top > height or self.rect.right < 0 or self.rect.left > width:
+        if self.rect.top > height or self.rect.right < 0 or self.rect.left > width or self.speedx == 0 or self.speedy == 0:
             self.rect.y = random.randint(0, width - obj_width)
-            self.rect.x = random.randint(-200, -obj_height)
-            self.speedy = random.randint(-6, 6)
-            self.speedx = random.randint(4, 18)
+            self.rect.x = random.randint(-150, -obj_height)
+            self.speedy = random.randint(-6 - round(score / 10), 6 + round(score / 10))
+            self.speedx = random.randint(4 - round(score / 10), 18 + round(score / 10))
 
 class pegar(pygame.sprite.Sprite):
     def __init__(self, center):
