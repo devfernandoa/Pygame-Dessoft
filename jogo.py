@@ -9,9 +9,11 @@ def jogo(tela):
     # Carrega o fundo do jogo
     sprites = pygame.sprite.Group()
     objetos = pygame.sprite.Group()
+    caixas = pygame.sprite.Group()
     grupos = {}
     grupos['sprites'] = sprites
     grupos['objetos'] = objetos
+
 
     bg = Background(tela)
     player = drone(grupos)
@@ -24,7 +26,7 @@ def jogo(tela):
 
     quit = 0
     jogando = 1
-    pegando = 2
+    explodindo = 2
     state = jogando
 
     teclas = {}
@@ -38,6 +40,13 @@ def jogo(tela):
 
     while state != quit:
         clock.tick(fps)
+
+        # Gerar uma caixa aleatoriamente
+        if random.randrange(0, 120) == 32 and len(caixas) < 5:
+            caixa = Caixa()
+            caixas.add(caixa)
+            sprites.add(caixa)
+
 
         bg.update()
         bg.render(tela)
@@ -64,21 +73,27 @@ def jogo(tela):
         sprites.update(score)
 
         if state == jogando:
-            score += 1 / 60
+            # score += 1 / 60
             hits = pygame.sprite.spritecollide(player, objetos, True, pygame.sprite.collide_mask)
+            ponto = pygame.sprite.spritecollide(player, caixas, True, pygame.sprite.collide_mask)
             if len(hits) > 0:
                 # som
                  # pegar.play()
                 player.kill()
-                pegando = pegar(player.rect.center)
-                sprites.add(pegando)
                 state = quit
                 keys_down = {}
-                pegando_tick = pygame.time.get_ticks()
-                duracao = pegando.frame_rate * len(pegando.anim) + 400
-        elif state == pegando:
+                explodindo = explodir(player.rect.center)
+                sprites.add(explodindo)
+                explodindo_tick = pygame.time.get_ticks()
+                duracao = explodindo.frame_rate * len(explodindo.anim) + 400
+            elif len(ponto) > 0:
+                # som
+                # pegar.play()
+                score += 1
+                caixa.kill()
+        elif state == explodindo:
             now = pygame.time.get_ticks()
-            if now - pegando_tick > duracao:
+            if now - explodindo_tick > duracao:
                 state = jogando
                 player = drone(grupos)
                 sprites.add(player)

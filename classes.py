@@ -60,7 +60,27 @@ class Objeto(pygame.sprite.Sprite):
             self.speedy = random.randint(-6 - round(score / 10), 6 + round(score / 10))
             self.speedx = random.randint(4 - round(score / 10), 18 + round(score / 10))
 
-class pegar(pygame.sprite.Sprite):
+class Caixa(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join(img_dir, 'caixa.png')).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (obj_width, obj_height))
+        self.rect = self.image.get_rect()
+        self.rect.y = random.randrange(0, width - obj_width)
+        self.rect.x = random.randrange(-200, -obj_height)
+        self.speedx = random.randrange(-6, 6)
+        self.speedy = random.randrange(4, 18)
+
+    def update(self, score):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        if self.rect.top > height or self.rect.right < 0 or self.rect.left > width:
+            self.rect.y = random.randint(0, width - obj_width)
+            self.rect.x = random.randint(-200, -obj_height)
+            self.speedy = random.randint(-6, 6)
+            self.speedx = random.randint(4, 18)
+
+class explodir(pygame.sprite.Sprite):
     def __init__(self, center):
         pygame.sprite.Sprite.__init__(self)
         anim = []

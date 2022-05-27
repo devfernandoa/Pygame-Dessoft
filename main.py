@@ -13,7 +13,6 @@ pygame.display.set_caption("SynthRace")
 
 state = Menu
 while state != Quit:
-    print(state)
     if state == Menu:
         state = menu(tela)
     elif state == Jogo:
