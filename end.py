@@ -2,8 +2,9 @@ import pygame
 import random
 from os import path
 from config import *
+import json
 
-def end(tela, score):
+def end(tela):
     clock = pygame.time.Clock()
 
     # Carrega o fundo do menu
@@ -12,6 +13,31 @@ def end(tela, score):
     font = pygame.font.Font(path.join(font_dir, 'PressStart2P.ttf'), 40)
     texto = font.render("Fim de jogo", True, (255, 255, 255))
     texto2 = font.render("Aperte 'r' para jogar de novo", True, (255, 255, 255))
+
+    hs_arquivo = open('hs.json', 'r')
+    hs_dados = json.load(hs_arquivo)
+    hs_arquivo.close()
+
+    score1 = 0
+    score2 = 0
+    score3 = 0
+    user1 = ''
+    user2 = ''
+    user3 = ''
+    for nome, valor in hs_dados.items():
+        if valor > score1:
+            score1 = valor
+            user1 = nome
+        elif valor > score2 and user1 != nome:
+            score2 = valor
+            user2 = nome
+        elif valor > score3 and user1 != nome and user2 != nome:
+            score3 = valor
+            user3 = nome
+
+    texto_score1 = font.render("Highscore: {} - > {}".format(user1, score1), True, (255, 255, 255))
+    texto_score2 = font.render("Highscore: {} - > {}".format(user2, score2), True, (255, 255, 255))
+    texto_score3 = font.render("Highscore: {} - > {}".format(user3, score3), True, (255, 255, 255))
 
     #Sons pra quando a gente tiver musicas
     '''
@@ -38,7 +64,10 @@ def end(tela, score):
                 
         tela.fill(black)
         tela.blit(background, background_rect)
-        tela.blit(texto, (width/2 - texto.get_width()/2, 60 - texto.get_height()/2))
-        tela.blit(texto2, (width/2 - texto2.get_width()/2, 60 + texto.get_height()/2))
+        tela.blit(texto, (width/2 - texto.get_width()/2, 150 - texto.get_height()/2))
+        tela.blit(texto2, (width/2 - texto2.get_width()/2, 150 + texto.get_height()/2))
+        tela.blit(texto_score1, (width/2 - texto2.get_width()/2, 480 + texto.get_height()))
+        tela.blit(texto_score2, (width/2 - texto2.get_width()/2, 480 + texto.get_height()*2))
+        tela.blit(texto_score3, (width/2 - texto2.get_width()/2, 480 + texto.get_height()*3))
         pygame.display.flip()
     return state

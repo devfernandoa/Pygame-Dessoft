@@ -7,13 +7,17 @@ import json
 def hs(tela, score):
     font = pygame.font.Font(path.join(font_dir, 'PressStart2P.ttf'), 28)
     clock = pygame.time.Clock()
-    input_box = pygame.Rect(width / 2 - 50, height / 2, 140, 32)
+    input_box = pygame.Rect(width / 2 - 100, height / 2, 140, 32)
+    background = pygame.image.load(path.join(img_dir, "menu2.png")).convert()
+    background_rect = background.get_rect()
     color_inactive = pygame.Color('lightskyblue3')
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
     active = False
     text = ''
     done = False
+    texto = font.render("Digite seu nome", True, (255, 255, 255))
+
 
     state = Highscore
 
@@ -55,7 +59,8 @@ def hs(tela, score):
                     else:
                         text += event.unicode
 
-        tela.fill((30, 30, 30))
+        tela.fill(black)
+        tela.blit(background, background_rect)
         # Render the current text.
         txt_surface = font.render(text, True, color)
         # Resize the box if the text is too long.
@@ -63,6 +68,7 @@ def hs(tela, score):
         input_box.w = width_text
         # Blit the text.
         tela.blit(txt_surface, (input_box.x+5, input_box.y+5))
+        tela.blit(texto, (width/2 - texto.get_width()/2, height/2 - texto.get_height()- 50))
         # Blit the input_box rect.
         pygame.draw.rect(tela, color, input_box, 2)
 

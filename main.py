@@ -22,7 +22,7 @@ while state != Quit:
     elif state == Highscore:
         state = hs(tela, score)
     elif state == End:
-        state = end(tela, score)
+        state = end(tela)
     else:
         state = Quit
 
