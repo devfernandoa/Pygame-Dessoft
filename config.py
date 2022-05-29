@@ -30,3 +30,5 @@ yellow = (255, 255, 0)
 Menu = 0
 Jogo = 1
 Quit = 2
+Highscore = 3
+End = 4

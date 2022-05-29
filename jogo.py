@@ -27,6 +27,7 @@ def jogo(tela):
     quit = 0
     jogando = 1
     explodindo = 2
+    highscore = 3
     state = jogando
 
     teclas = {}
@@ -38,7 +39,7 @@ def jogo(tela):
     pygame.mixer.music.play(-1)
     '''
 
-    while state != quit:
+    while state != 0 or state != 3:
         clock.tick(fps)
 
         # Gerar uma caixa aleatoriamente
@@ -80,7 +81,7 @@ def jogo(tela):
                 # som
                  # pegar.play()
                 player.kill()
-                state = quit
+                state = highscore
                 keys_down = {}
                 explodindo = explodir(player.rect.center)
                 sprites.add(explodindo)
@@ -108,5 +109,6 @@ def jogo(tela):
         tela.blit(text_surface, text_rect)
 
         pygame.display.update()
-                
-        
+        if state == 3:
+            break
+    return state, score

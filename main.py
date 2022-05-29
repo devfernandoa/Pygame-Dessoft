@@ -4,6 +4,8 @@ import time
 from config import *
 from menu import *
 from jogo import *
+from highscore import *
+from end import *
 
 pygame.init()
 pygame.mixer.init()
@@ -16,8 +18,12 @@ while state != Quit:
     if state == Menu:
         state = menu(tela)
     elif state == Jogo:
-        state = jogo(tela)
+        state, score = jogo(tela)
+    elif state == Highscore:
+        state = hs(tela, score)
+    elif state == End:
+        state = end(tela, score)
     else:
         state = Quit
 
-pygame.quit() 
+pygame.quit()

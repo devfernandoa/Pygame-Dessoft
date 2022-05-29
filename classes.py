@@ -98,7 +98,7 @@ class explodir(pygame.sprite.Sprite):
         self.last_update = pygame.time.get_ticks()
         self.frame_rate = 50
 
-    def update(self):
+    def update(self, score):
         now = pygame.time.get_ticks()
         if now - self.last_update > self.frame_rate:
             self.last_update = now
