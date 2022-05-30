@@ -46,7 +46,7 @@ def jogo(tela):
 
         # Gerar uma caixa aleatoriamente
         if random.randrange(0, 120) == 32 and len(caixas) < 5:
-            caixa = Caixa()
+            caixa = Caixa(player.rect.center)
             caixas.add(caixa)
             sprites.add(caixa)
 

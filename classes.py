@@ -65,17 +65,40 @@ class Objeto(pygame.sprite.Sprite):
             self.speedx = random.randint(4 - round(tempo / 10), 12 + round(tempo / 10))
 
 class Caixa(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, center):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join(img_dir, 'caixa.png')).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (obj_width, obj_height))
+        anim = []
+        for i in range(16):
+            arq = os.path.join(img_dir, 'frame_0{}.png'.format(i))
+            img = pygame.image.load(arq).convert()
+            img = pygame.transform.scale(img, (caixa_width, caixa_height))
+            anim.append(img)
+        self.anim = anim
+        self.frame = 0 
+        self.image = self.anim[self.frame]  
         self.rect = self.image.get_rect()
+        self.rect.center = center  
+
+        self.last_update = pygame.time.get_ticks()
+        self.frame_rate = 50
         self.rect.y = random.randrange(0, width - obj_width)
         self.rect.x = random.randrange(-200, -obj_height)
         self.speedx = random.randrange(-6, 6)
         self.speedy = random.randrange(4, 18)
 
     def update(self, score):
+        now = pygame.time.get_ticks()
+        if now - self.last_update > self.frame_rate:
+            self.last_update = now
+            self.frame += 1
+            if self.frame == len(self.anim):
+                self.frame = 0
+            else:
+                center = self.rect.center
+                self.image = self.anim[self.frame]
+                self.rect = self.image.get_rect()
+                self.rect.center = center
+
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         if self.rect.top > height or self.rect.right < 0 or self.rect.left > width:

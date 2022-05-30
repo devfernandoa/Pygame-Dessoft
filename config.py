@@ -15,6 +15,8 @@ fps = 60
 # Dados dos objetos
 obj_width = 100
 obj_height = 76
+caixa_width = 192
+caixa_height = 108
 drone_width = 100
 drone_height = 76
 

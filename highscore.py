@@ -18,7 +18,7 @@ def hs(tela, score):
     done = False
     texto = font.render("Digite seu nome", True, (255, 255, 255))
     texto_gameover = font.render("GAME OVER", True, (255, 255, 255))
-    texto_highscore = font.render("Novo highscore", True, (255, 255, 255))
+    texto_highscore = font.render("Score -> {}".format(score), True, (255, 255, 255))
 
 
     state = Highscore
@@ -82,6 +82,7 @@ def hs(tela, score):
         tela.blit(txt_surface, (input_box.x+5, input_box.y+5))
         tela.blit(texto, (width/2 - texto.get_width()/2, height/2 - texto.get_height()- 50))
         tela.blit(texto_gameover, (width/2 - texto_gameover.get_width()/2, height/3 - texto_gameover.get_height()/2))
+        tela.blit(texto_highscore, (width/2 - texto_highscore.get_width()/2, height/3 + texto_highscore.get_height()* 1.5))
 
         pygame.draw.rect(tela, color, input_box, 2)
 
