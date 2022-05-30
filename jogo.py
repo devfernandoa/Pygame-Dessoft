@@ -33,6 +33,8 @@ def jogo(tela):
     teclas = {}
     score = 0
 
+    tempo = 0
+
     '''
     # Carrega os sons do jogo
     pygame.mixer.music.load(path.join(sound_dir, "jogo.ogg"))
@@ -71,10 +73,10 @@ def jogo(tela):
                             player.speedx += 8
                         if event.key == pygame.K_RIGHT:
                             player.speedx -= 8
-        sprites.update(score)
+        sprites.update(tempo)
 
         if state == jogando:
-            # score += 1 / 60
+            tempo += 1 / 60
             hits = pygame.sprite.spritecollide(player, objetos, True, pygame.sprite.collide_mask)
             ponto = pygame.sprite.spritecollide(player, caixas, True, pygame.sprite.collide_mask)
             if len(hits) > 0:

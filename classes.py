@@ -52,17 +52,17 @@ class Objeto(pygame.sprite.Sprite):
         self.speedy = random.randrange(4, 18)
         self.restrito = [4, -3, -2, -1, 0, 1, 2, 3, 4]
 
-    def update(self, score):
+    def update(self, tempo):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         if self.rect.top > height or self.rect.right < 0 or self.rect.left > width or self.speedx in self.restrito or self.speedy in self.restrito:
             self.rect.y = random.randint(0, width - obj_width)
             self.rect.x = random.randint(-150, -obj_height)
-            self.speedy = random.randint(-6 - round(score / 10), 6 + round(score / 10))
-            self.speedx = random.randint(4 - round(score / 10), 18 + round(score / 10))
+            self.speedy = random.randint(-4 - round(tempo / 10), 4 + round(tempo / 10))
+            self.speedx = random.randint(4 - round(tempo / 10), 12 + round(tempo / 10))
         while self.speedx in self.restrito or self.speedy in self.restrito:
-            self.speedy = random.randint(-6 - round(score / 10), 6 + round(score / 10))
-            self.speedx = random.randint(4 - round(score / 10), 18 + round(score / 10))
+            self.speedy = random.randint(-4 - round(tempo / 10), 4 + round(tempo / 10))
+            self.speedx = random.randint(4 - round(tempo / 10), 12 + round(tempo / 10))
 
 class Caixa(pygame.sprite.Sprite):
     def __init__(self):
