@@ -27,6 +27,16 @@ def hs(tela, score):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state = Quit
+                condicao = False
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_ESCAPE:
+                    state = Quit
+                    condicao = False
+                elif event.key == pygame.K_r:
+                    state = Jogo
+                    condicao = False
+            if event.type == pygame.QUIT:
+                state = Quit
                 done = True
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # If the user clicked on the input_box rect.
@@ -44,10 +54,10 @@ def hs(tela, score):
                         hs_arquivo = open('hs.json', 'r')
                         hs_dados = json.load(hs_arquivo)
                         hs_arquivo.close()
-                        if text not in hs_dados:
+                        if text not in hs_dados.keys():
                             hs_dados[text] = score
                         else:
-                            if hs_dados[text] < score:
+                            if score > hs_dados[text]:
                                 hs_dados[text] = score
                         hs_arquivo = open('hs.json', 'w')
                         json.dump(hs_dados, hs_arquivo)

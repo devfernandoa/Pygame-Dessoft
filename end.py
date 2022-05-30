@@ -28,10 +28,12 @@ def end(tela):
         if valor > score1:
             score1 = valor
             user1 = nome
-        elif valor > score2 and user1 != nome:
+    for nome, valor in hs_dados.items():
+        if valor > score2 and user1 != nome:
             score2 = valor
             user2 = nome
-        elif valor > score3 and user1 != nome and user2 != nome:
+    for nome, valor in hs_dados.items():
+        if valor > score3 and user1 != nome and user2 != nome:
             score3 = valor
             user3 = nome
 
