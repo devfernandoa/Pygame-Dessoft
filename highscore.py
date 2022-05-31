@@ -28,13 +28,6 @@ def hs(tela, score):
             if event.type == pygame.QUIT:
                 state = Quit
                 condicao = False
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_ESCAPE:
-                    state = Quit
-                    condicao = False
-                elif event.key == pygame.K_r:
-                    state = Jogo
-                    condicao = False
             if event.type == pygame.QUIT:
                 state = Quit
                 done = True

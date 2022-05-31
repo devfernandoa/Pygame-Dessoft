@@ -10,6 +10,7 @@ def jogo(tela):
     sprites = pygame.sprite.Group()
     objetos = pygame.sprite.Group()
     caixas = pygame.sprite.Group()
+    estrelas = pygame.sprite.Group()
     grupos = {}
     grupos['sprites'] = sprites
     grupos['objetos'] = objetos
@@ -34,6 +35,8 @@ def jogo(tela):
     score = 0
 
     tempo = 0
+    tpower = 0
+    power = False
 
     '''
     # Carrega os sons do jogo
@@ -45,11 +48,16 @@ def jogo(tela):
         clock.tick(fps)
 
         # Gerar uma caixa aleatoriamente
-        if random.randrange(0, 120) == 32 and len(caixas) < 5:
+        if random.randrange(0, 120) == 69 and len(caixas) < 1:
             caixa = Caixa(player.rect.center)
             caixas.add(caixa)
             sprites.add(caixa)
 
+        # Gera uma estrela aleatoriamente
+        if random.randrange(0, 1200) == 420 and len(estrelas) < 2 and power == False:
+            estrela = Estrela(player.rect.center)
+            estrelas.add(estrela)
+            sprites.add(estrela)
 
         bg.update()
         bg.render(tela)
@@ -79,7 +87,8 @@ def jogo(tela):
             tempo += 1 / 60
             hits = pygame.sprite.spritecollide(player, objetos, True, pygame.sprite.collide_mask)
             ponto = pygame.sprite.spritecollide(player, caixas, True, pygame.sprite.collide_mask)
-            if len(hits) > 0:
+            powerup = pygame.sprite.spritecollide(player, estrelas, True, pygame.sprite.collide_mask)
+            if len(hits) > 0 and power == False:
                 # som
                  # pegar.play()
                 player.kill()
@@ -94,6 +103,17 @@ def jogo(tela):
                 # pegar.play()
                 score += 1
                 caixa.kill()
+            elif len(powerup) > 0:
+                # som
+                # powerup.play()
+                power = True
+                estrela.kill()
+            if power:
+                tpower += 1/60
+                if tpower > 4:
+                    power = False
+                    tpower = 0
+                tela.fill(black)
         elif state == explodindo:
             now = pygame.time.get_ticks()
             if now - explodindo_tick > duracao:
