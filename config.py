@@ -10,7 +10,7 @@ width = 1200
 height = 960
 
 # Frames por segundo
-fps = 60 
+fps = 60
 
 # Dados dos objetos
 obj_width = 100

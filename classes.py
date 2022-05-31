@@ -3,27 +3,35 @@ import pygame
 import os
 from config import *
 
+
 class drone(pygame.sprite.Sprite):
     '''Classe que gera o objeto drone (jogador)
 
     Classe do tipo Sprite que representa o drone, suas variaveis e sua movimentação, tratando as inputs geradas pelo jogador
     '''
-    
+
     def __init__(self, groups):
         pygame.sprite.Sprite.__init__(self)
 
         # Declara as diferentes posições do drone
-        self.image1 = pygame.image.load(os.path.join(img_dir, 'drone_1.png')).convert_alpha()
-        self.image1 = pygame.transform.scale(self.image1, (drone_width, drone_height))
-        self.image2 = pygame.image.load(os.path.join(img_dir, 'drone_2.png')).convert_alpha()
-        self.image2 = pygame.transform.scale(self.image2, (drone_width, drone_height))
-        self.image3 = pygame.image.load(os.path.join(img_dir, 'drone_3.png')).convert_alpha()
-        self.image3 = pygame.transform.scale(self.image3, (drone_width, drone_height))
-        self.image4 = pygame.image.load(os.path.join(img_dir, 'drone_4.png')).convert_alpha()
-        self.image4 = pygame.transform.scale(self.image4, (drone_width, drone_height))
+        self.image1 = pygame.image.load(os.path.join(
+            img_dir, 'drone_1.png')).convert_alpha()
+        self.image1 = pygame.transform.scale(
+            self.image1, (drone_width, drone_height))
+        self.image2 = pygame.image.load(os.path.join(
+            img_dir, 'drone_2.png')).convert_alpha()
+        self.image2 = pygame.transform.scale(
+            self.image2, (drone_width, drone_height))
+        self.image3 = pygame.image.load(os.path.join(
+            img_dir, 'drone_3.png')).convert_alpha()
+        self.image3 = pygame.transform.scale(
+            self.image3, (drone_width, drone_height))
+        self.image4 = pygame.image.load(os.path.join(
+            img_dir, 'drone_4.png')).convert_alpha()
+        self.image4 = pygame.transform.scale(
+            self.image4, (drone_width, drone_height))
 
         self.image = self.image1
-
 
         self.rect = self.image.get_rect()
         self.rect.centerx = width - 10
@@ -45,7 +53,7 @@ class drone(pygame.sprite.Sprite):
             self.speedy = -10
         if keystate[pygame.K_DOWN]:
             self.speedy = 10
-        
+
         if self.speedx == 0 and self.speedy == 0:
             self.image = self.image1
         elif self.speedx > 0:
@@ -66,6 +74,7 @@ class drone(pygame.sprite.Sprite):
         if self.rect.top < 0:
             self.rect.top = 0
 
+
 class Objeto(pygame.sprite.Sprite):
     '''Classe que gera o objeto 
 
@@ -74,8 +83,10 @@ class Objeto(pygame.sprite.Sprite):
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join(img_dir, 'obj.png')).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (obj_width, obj_height))
+        self.image = pygame.image.load(
+            os.path.join(img_dir, 'obj.png')).convert_alpha()
+        self.image = pygame.transform.scale(
+            self.image, (obj_width, obj_height))
         self.rect = self.image.get_rect()
         self.rect.y = random.randrange(0, width - obj_width)
         self.rect.x = random.randrange(-150, -obj_height)
@@ -93,8 +104,9 @@ class Objeto(pygame.sprite.Sprite):
             self.speedy = random.randint(-4 - round(tempo / 10), 4 + round(tempo / 10))
             self.speedx = random.randint(4 - round(tempo / 10), 12 + round(tempo / 10))
         while self.speedx in self.restrito or self.speedy in self.restrito:
-            self.speedy = random.randint(-4 - round(tempo / 10), 4 + round(tempo / 10))
+            self.speedy = random.randint(-4 -round(tempo / 10), 4 + round(tempo / 10))
             self.speedx = random.randint(4 - round(tempo / 10), 12 + round(tempo / 10))
+
 
 class Caixa(pygame.sprite.Sprite):
     '''Classe que gera a Caixa 
@@ -111,10 +123,10 @@ class Caixa(pygame.sprite.Sprite):
             img = pygame.transform.scale(img, (caixa_width, caixa_height))
             anim.append(img)
         self.anim = anim
-        self.frame = 0 
-        self.image = self.anim[self.frame]  
+        self.frame = 0
+        self.image = self.anim[self.frame]
         self.rect = self.image.get_rect()
-        self.rect.center = center  
+        self.rect.center = center
 
         self.last_update = pygame.time.get_ticks()
         self.frame_rate = 50
@@ -145,6 +157,7 @@ class Caixa(pygame.sprite.Sprite):
             self.speedy = random.randint(-6, 6)
             self.speedx = random.randint(4, 18)
 
+
 class Estrela(pygame.sprite.Sprite):
     '''Classe que gera o powerup Estrela 
 
@@ -160,10 +173,10 @@ class Estrela(pygame.sprite.Sprite):
             img = pygame.transform.scale(img, (obj_width, obj_height))
             anim.append(img)
         self.anim = anim
-        self.frame = 0 
-        self.image = self.anim[self.frame]  
+        self.frame = 0
+        self.image = self.anim[self.frame]
         self.rect = self.image.get_rect()
-        self.rect.center = center  
+        self.rect.center = center
 
         self.last_update = pygame.time.get_ticks()
         self.frame_rate = 50
@@ -194,6 +207,7 @@ class Estrela(pygame.sprite.Sprite):
             self.speedy = random.randint(-6, 6)
             self.speedx = random.randint(4, 18)
 
+
 class explodir(pygame.sprite.Sprite):
     '''Classe que gera a explosão
 
@@ -209,10 +223,10 @@ class explodir(pygame.sprite.Sprite):
             img = pygame.transform.scale(img, (32, 32))
             anim.append(img)
         self.anim = anim
-        self.frame = 0 
-        self.image = self.anim[self.frame]  
+        self.frame = 0
+        self.image = self.anim[self.frame]
         self.rect = self.image.get_rect()
-        self.rect.center = center  
+        self.rect.center = center
 
         self.last_update = pygame.time.get_ticks()
         self.frame_rate = 50
@@ -231,25 +245,27 @@ class explodir(pygame.sprite.Sprite):
                 self.rect = self.image.get_rect()
                 self.rect.center = center
 
+
 class Background():
     ''' Classe que gera o fundo do jogo
-    
+
     Classe que gera o fundo do jogo, como uma imagem de fundo que rola ao longo do tempo, e que é atualizada a cada frame.
     '''
 
     def __init__(self, tela):
-        self.bgimage = pygame.image.load(os.path.join(img_dir, 'bg3.png')).convert_alpha()
+        self.bgimage = pygame.image.load(
+            os.path.join(img_dir, 'bg3.png')).convert_alpha()
         self.bgimage = pygame.transform.scale(self.bgimage, (width, height))
         self.rectBGimg = self.bgimage.get_rect()
- 
+
         self.bgY1 = 0
         self.bgX1 = 0
- 
+
         self.bgY2 = 0
         self.bgX2 = self.rectBGimg.width
- 
+
         self.moving_speed = 5
-         
+
     def update(self):
         '''Atualiza a imagem de fundo'''
         self.bgX1 -= self.moving_speed
@@ -258,6 +274,7 @@ class Background():
             self.bgX1 = self.rectBGimg.width
         if self.bgX2 <= -self.rectBGimg.width:
             self.bgX2 = self.rectBGimg.width
+
     def render(self, tela):
         '''Função que renderiza o fundo do jogo a cada frame'''
         tela.blit(self.bgimage, (self.bgX1, self.bgY1))
