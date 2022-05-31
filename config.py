@@ -17,8 +17,8 @@ obj_width = 100
 obj_height = 76
 caixa_width = 192
 caixa_height = 108
-drone_width = 100
-drone_height = 76
+drone_width = 150
+drone_height = 150
 
 powerup_duracao = 4
 

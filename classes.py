@@ -12,9 +12,19 @@ class drone(pygame.sprite.Sprite):
     def __init__(self, groups):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = pygame.image.load(os.path.join(img_dir, 'player.png')).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (drone_width, drone_height))
-        self.image = pygame.transform.rotate(self.image, 90)
+        # Declara as diferentes posições do drone
+        self.image1 = pygame.image.load(os.path.join(img_dir, 'drone_1.png')).convert_alpha()
+        self.image1 = pygame.transform.scale(self.image1, (drone_width, drone_height))
+        self.image2 = pygame.image.load(os.path.join(img_dir, 'drone_2.png')).convert_alpha()
+        self.image2 = pygame.transform.scale(self.image2, (drone_width, drone_height))
+        self.image3 = pygame.image.load(os.path.join(img_dir, 'drone_3.png')).convert_alpha()
+        self.image3 = pygame.transform.scale(self.image3, (drone_width, drone_height))
+        self.image4 = pygame.image.load(os.path.join(img_dir, 'drone_4.png')).convert_alpha()
+        self.image4 = pygame.transform.scale(self.image4, (drone_width, drone_height))
+
+        self.image = self.image1
+
+
         self.rect = self.image.get_rect()
         self.rect.centerx = width - 10
         self.rect.bottom = height / 2
@@ -35,6 +45,16 @@ class drone(pygame.sprite.Sprite):
             self.speedy = -10
         if keystate[pygame.K_DOWN]:
             self.speedy = 10
+        
+        if self.speedx == 0 and self.speedy == 0:
+            self.image = self.image1
+        elif self.speedx > 0:
+            self.image = self.image3
+        elif self.speedx < 0:
+            self.image = self.image4
+        elif self.speedy > 0:
+            self.image = self.image2
+
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         if self.rect.right > width:
@@ -216,6 +236,7 @@ class Background():
     
     Classe que gera o fundo do jogo, como uma imagem de fundo que rola ao longo do tempo, e que é atualizada a cada frame.
     '''
+
     def __init__(self, tela):
         self.bgimage = pygame.image.load(os.path.join(img_dir, 'bg3.png')).convert_alpha()
         self.bgimage = pygame.transform.scale(self.bgimage, (width, height))
