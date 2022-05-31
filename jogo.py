@@ -6,7 +6,7 @@ from config import *
 def jogo(tela):
     clock = pygame.time.Clock()
 
-    # Carrega o fundo do jogo
+    # Inicializa grupos
     sprites = pygame.sprite.Group()
     objetos = pygame.sprite.Group()
     caixas = pygame.sprite.Group()
@@ -14,8 +14,11 @@ def jogo(tela):
     grupos = {}
     grupos['sprites'] = sprites
     grupos['objetos'] = objetos
+    grupos['caixas'] = caixas
+    grupos['estrelas'] = estrelas
 
 
+    # Inicializa objetos
     bg = Background(tela)
     player = drone(grupos)
     sprites.add(player)
@@ -25,6 +28,7 @@ def jogo(tela):
         objetos.add(objeto)
         sprites.add(objeto)
 
+    # Inicializa variaveis
     quit = 0
     jogando = 1
     explodindo = 2
@@ -44,6 +48,7 @@ def jogo(tela):
     pygame.mixer.music.play(-1)
     '''
 
+    # Loop do jogo
     while state != 0 or state != 3:
         clock.tick(fps)
 
@@ -54,11 +59,12 @@ def jogo(tela):
             sprites.add(caixa)
 
         # Gera uma estrela aleatoriamente
-        if random.randrange(0, 1200) == 420 and len(estrelas) < 2 and power == False:
+        if random.randrange(0, 1500) == 420 and len(estrelas) < 2 and power == False:
             estrela = Estrela(player.rect.center)
             estrelas.add(estrela)
             sprites.add(estrela)
 
+        # Atualizar o fundo
         bg.update()
         bg.render(tela)
 
@@ -67,8 +73,8 @@ def jogo(tela):
                 state = quit
             if state == jogando:
                 if event.type == pygame.KEYDOWN:
-
                     teclas[event.key] = True
+                    # Movimenta o drone
                     if event.key == pygame.K_LEFT:
                         player.speedx -= 8 
                     if event.key == pygame.K_RIGHT:
@@ -77,6 +83,7 @@ def jogo(tela):
                 if event.type == pygame.KEYUP:
 
                     if event.key in teclas and teclas[event.key]:
+                        # Volta a velocidade do drone para 0 ao soltar a tecla
                         if event.key == pygame.K_LEFT:
                             player.speedx += 8
                         if event.key == pygame.K_RIGHT:
@@ -84,10 +91,15 @@ def jogo(tela):
         sprites.update(tempo)
 
         if state == jogando:
+            # Conta o tempo (60 frames por segundo)
             tempo += 1 / 60
+
+            # Verifica se o colisões
             hits = pygame.sprite.spritecollide(player, objetos, True, pygame.sprite.collide_mask)
             ponto = pygame.sprite.spritecollide(player, caixas, True, pygame.sprite.collide_mask)
             powerup = pygame.sprite.spritecollide(player, estrelas, True, pygame.sprite.collide_mask)
+
+            # Verifica se o player colidiu com algum objeto e roda a animação de explosão
             if len(hits) > 0 and power == False:
                 # som
                  # pegar.play()
@@ -98,19 +110,25 @@ def jogo(tela):
                 sprites.add(explodindo)
                 explodindo_tick = pygame.time.get_ticks()
                 duracao = explodindo.frame_rate * len(explodindo.anim) + 400
+            
+            # Verifica se o player colidiu com uma caixa e adiciona um ponto
             elif len(ponto) > 0:
                 # som
                 # pegar.play()
                 score += 1
                 caixa.kill()
+            
+            # Verifica se o player colidiu com uma estrela e ativa o powerup
             elif len(powerup) > 0:
                 # som
                 # powerup.play()
                 power = True
                 estrela.kill()
+
+            # Conta a duração do powerup
             if power:
                 tpower += 1/60
-                if tpower > 4:
+                if tpower > powerup_duracao:
                     power = False
                     tpower = 0
                 tela.fill(black)

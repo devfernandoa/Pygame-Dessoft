@@ -22,6 +22,8 @@ def menu(tela):
     '''
 
     condicao = True
+
+    # Loop menu
     while condicao:
         clock.tick(fps)
         for event in pygame.event.get():

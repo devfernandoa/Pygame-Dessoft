@@ -20,6 +20,8 @@ caixa_height = 108
 drone_width = 100
 drone_height = 76
 
+powerup_duracao = 4
+
 # Cores
 white = (255, 255, 255)
 black = (0, 0, 0)

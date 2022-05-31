@@ -4,6 +4,11 @@ import os
 from config import *
 
 class drone(pygame.sprite.Sprite):
+    '''Classe que gera o objeto drone (jogador)
+
+    Classe do tipo Sprite que representa o drone, suas variaveis e sua movimentação, tratando as inputs geradas pelo jogador
+    '''
+    
     def __init__(self, groups):
         pygame.sprite.Sprite.__init__(self)
 
@@ -18,6 +23,7 @@ class drone(pygame.sprite.Sprite):
         self.groups = groups
 
     def update(self, score):
+        '''Atualiza a posição e velocidade do drone'''
         self.speedx = 0
         self.speedy = 0
         keystate = pygame.key.get_pressed()
@@ -41,6 +47,11 @@ class drone(pygame.sprite.Sprite):
             self.rect.top = 0
 
 class Objeto(pygame.sprite.Sprite):
+    '''Classe que gera o objeto 
+
+    Classe do tipo Sprite que representa o objeto que o jogador tem que desviar e suas variaveis. 
+    '''
+
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(os.path.join(img_dir, 'obj.png')).convert_alpha()
@@ -53,6 +64,7 @@ class Objeto(pygame.sprite.Sprite):
         self.restrito = [4, -3, -2, -1, 0, 1, 2, 3, 4]
 
     def update(self, tempo):
+        '''Atualiza a posição do objeto'''
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         if self.rect.top > height or self.rect.right < 0 or self.rect.left > width or self.speedx in self.restrito or self.speedy in self.restrito:
@@ -65,6 +77,11 @@ class Objeto(pygame.sprite.Sprite):
             self.speedx = random.randint(4 - round(tempo / 10), 12 + round(tempo / 10))
 
 class Caixa(pygame.sprite.Sprite):
+    '''Classe que gera a Caixa 
+
+    Classe do tipo Sprite que representa o objeto que o jogador tem que pegar e suas variaveis. Trata também de fazer a animação da caixa girando
+    '''
+
     def __init__(self, center):
         pygame.sprite.Sprite.__init__(self)
         anim = []
@@ -87,6 +104,7 @@ class Caixa(pygame.sprite.Sprite):
         self.speedy = random.randrange(4, 18)
 
     def update(self, score):
+        '''Atualiza a animação e posição da caixa'''
         now = pygame.time.get_ticks()
         if now - self.last_update > self.frame_rate:
             self.last_update = now
@@ -108,6 +126,11 @@ class Caixa(pygame.sprite.Sprite):
             self.speedx = random.randint(4, 18)
 
 class Estrela(pygame.sprite.Sprite):
+    '''Classe que gera o powerup Estrela 
+
+    Classe do tipo Sprite que representa o powerup que deixará o jogador invencível. Trata também de fazer a animação da estrela girando
+    '''
+
     def __init__(self, center):
         pygame.sprite.Sprite.__init__(self)
         anim = []
@@ -130,6 +153,7 @@ class Estrela(pygame.sprite.Sprite):
         self.speedy = random.randrange(4, 18)
 
     def update(self, score):
+        '''Atualiza a animação e posição da estrela'''
         now = pygame.time.get_ticks()
         if now - self.last_update > self.frame_rate:
             self.last_update = now
@@ -151,6 +175,11 @@ class Estrela(pygame.sprite.Sprite):
             self.speedx = random.randint(4, 18)
 
 class explodir(pygame.sprite.Sprite):
+    '''Classe que gera a explosão
+
+    Classe do tipo Sprite que representa a explosão que aparece quando o jogador é atingido por um objeto.
+    '''
+
     def __init__(self, center):
         pygame.sprite.Sprite.__init__(self)
         anim = []
@@ -169,6 +198,7 @@ class explodir(pygame.sprite.Sprite):
         self.frame_rate = 50
 
     def update(self, score):
+        '''Atualiza a animação da explosão'''
         now = pygame.time.get_ticks()
         if now - self.last_update > self.frame_rate:
             self.last_update = now
@@ -182,27 +212,32 @@ class explodir(pygame.sprite.Sprite):
                 self.rect.center = center
 
 class Background():
-      def __init__(self, tela):
-            self.bgimage = pygame.image.load(os.path.join(img_dir, 'bg3.png')).convert_alpha()
-            self.bgimage = pygame.transform.scale(self.bgimage, (width, height))
-            self.rectBGimg = self.bgimage.get_rect()
+    ''' Classe que gera o fundo do jogo
+    
+    Classe que gera o fundo do jogo, como uma imagem de fundo que rola ao longo do tempo, e que é atualizada a cada frame.
+    '''
+    def __init__(self, tela):
+        self.bgimage = pygame.image.load(os.path.join(img_dir, 'bg3.png')).convert_alpha()
+        self.bgimage = pygame.transform.scale(self.bgimage, (width, height))
+        self.rectBGimg = self.bgimage.get_rect()
  
-            self.bgY1 = 0
-            self.bgX1 = 0
+        self.bgY1 = 0
+        self.bgX1 = 0
  
-            self.bgY2 = 0
-            self.bgX2 = self.rectBGimg.width
+        self.bgY2 = 0
+        self.bgX2 = self.rectBGimg.width
  
-            self.moving_speed = 5
+        self.moving_speed = 5
          
-      def update(self):
+    def update(self):
+        '''Atualiza a imagem de fundo'''
         self.bgX1 -= self.moving_speed
         self.bgX2 -= self.moving_speed
         if self.bgX1 <= -self.rectBGimg.width:
             self.bgX1 = self.rectBGimg.width
         if self.bgX2 <= -self.rectBGimg.width:
             self.bgX2 = self.rectBGimg.width
-             
-      def render(self, tela):
-         tela.blit(self.bgimage, (self.bgX1, self.bgY1))
-         tela.blit(self.bgimage, (self.bgX2, self.bgY2))
+    def render(self, tela):
+        '''Função que renderiza o fundo do jogo a cada frame'''
+        tela.blit(self.bgimage, (self.bgX1, self.bgY1))
+        tela.blit(self.bgimage, (self.bgX2, self.bgY2))

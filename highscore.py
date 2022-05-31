@@ -5,6 +5,8 @@ from config import *
 import json
 
 def hs(tela, score):
+
+    # Inicializa variaveis
     font = pygame.font.Font(path.join(font_dir, 'PressStart2P.ttf'), 28)
     clock = pygame.time.Clock()
     input_box = pygame.Rect(width / 2 - 100, height / 2, 140, 32)
@@ -16,6 +18,8 @@ def hs(tela, score):
     active = False
     text = ''
     done = False
+
+    # Textos
     texto = font.render("Digite seu nome", True, (255, 255, 255))
     texto_gameover = font.render("GAME OVER", True, (255, 255, 255))
     texto_highscore = font.render("Score -> {}".format(score), True, (255, 255, 255))
@@ -23,27 +27,25 @@ def hs(tela, score):
 
     state = Highscore
 
+    # Loop da tela
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state = Quit
-                condicao = False
-            if event.type == pygame.QUIT:
-                state = Quit
                 done = True
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # If the user clicked on the input_box rect.
+                # Se o usuario clicar na caixa de texto, ela fica ativa
                 if input_box.collidepoint(event.pos):
-                    # Toggle the active variable.
+                    # Alterna a variavel de ativação
                     active = not active
                 else:
                     active = False
-                # Change the current color of the input box.
+                # Muda a corzinha da caixa de texto
                 color = color_active if active else color_inactive
             if event.type == pygame.KEYDOWN:
                 if active:
                     if event.key == pygame.K_RETURN:
-                        # Código para salvar o nome e o score do jogador
+                        # Código para acessar o arquivo de highscores e salvar o nome e o score do jogador
                         hs_arquivo = open('hs.json', 'r')
                         hs_dados = json.load(hs_arquivo)
                         hs_arquivo.close()
@@ -59,11 +61,13 @@ def hs(tela, score):
                         state = End
 
                         text = ''
+                    # Adiciona e tira texto na caixa de texto
                     elif event.key == pygame.K_BACKSPACE:
                         text = text[:-1]
                     else:
                         text += event.unicode
 
+        # Desenha fundos e textos
         tela.fill(black)
         tela.blit(background, background_rect)
 
