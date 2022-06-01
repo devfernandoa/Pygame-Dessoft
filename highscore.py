@@ -15,7 +15,7 @@ def hs(tela, score):
     color_inactive = pygame.Color('lightskyblue3')
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
-    active = True
+    active = False
     text = ''
     done = False
 
