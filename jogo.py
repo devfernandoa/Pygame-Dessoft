@@ -64,12 +64,13 @@ def jogo(tela):
             sprites.add(estrela)
 
         # Atualizar o fundo
-        bg.update()
+        bg.update(power)
         bg.render(tela)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state = quit
+                pygame.quit()
             if state == jogando:
                 if event.type == pygame.KEYDOWN:
                     teclas[event.key] = True
@@ -130,7 +131,7 @@ def jogo(tela):
                 if tpower > powerup_duracao:
                     power = False
                     tpower = 0
-                tela.fill(black)
+
         elif state == explodindo:
             now = pygame.time.get_ticks()
             if now - explodindo_tick > duracao:

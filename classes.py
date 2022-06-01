@@ -250,8 +250,21 @@ class Background():
  
         self.moving_speed = 5
          
-    def update(self):
+        self.background = 1 
+    def update(self, power):
         '''Atualiza a imagem de fundo'''
+
+        if power == False and self.background != 1:
+            self.background = 1
+            self.bgimage = pygame.image.load(os.path.join(img_dir, 'skyline.png')).convert_alpha()
+            self.bgimage = pygame.transform.scale(self.bgimage, (width, height))
+            self.rectBGimg = self.bgimage.get_rect()
+        elif power == True and self.background != 2:
+            self.background = 2
+            self.bgimage = pygame.image.load(os.path.join(img_dir, 'skyline-power.png')).convert_alpha()
+            self.bgimage = pygame.transform.scale(self.bgimage, (width, height))
+            self.rectBGimg = self.bgimage.get_rect()
+
         self.bgX1 -= self.moving_speed
         self.bgX2 -= self.moving_speed
         if self.bgX1 <= -self.rectBGimg.width:
