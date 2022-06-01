@@ -71,6 +71,7 @@ def jogo(tela):
             if event.type == pygame.QUIT:
                 state = quit
                 pygame.quit()
+                break
             if state == jogando:
                 if event.type == pygame.KEYDOWN:
                     teclas[event.key] = True
