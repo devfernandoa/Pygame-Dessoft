@@ -3,7 +3,6 @@ import time
 from classes import *
 from config import *
 
-
 def jogo(tela):
     clock = pygame.time.Clock()
 
@@ -17,6 +16,7 @@ def jogo(tela):
     grupos['objetos'] = objetos
     grupos['caixas'] = caixas
     grupos['estrelas'] = estrelas
+
 
     # Inicializa objetos
     bg = Background(tela)
@@ -42,11 +42,10 @@ def jogo(tela):
     tpower = 0
     power = False
 
-    '''
+
     # Carrega os sons do jogo
-    pygame.mixer.music.load(path.join(sound_dir, "jogo.ogg"))
-    pygame.mixer.music.play(-1)
-    '''
+    pygame.mixer.music.load(path.join(sound_dir, "jogo.mp3"))
+    pygame.mixer.music.play(loops=-1)
 
     # Loop do jogo
     while state != 0 or state != 3:
@@ -76,7 +75,7 @@ def jogo(tela):
                     teclas[event.key] = True
                     # Movimenta o drone
                     if event.key == pygame.K_LEFT:
-                        player.speedx -= 8
+                        player.speedx -= 8 
                     if event.key == pygame.K_RIGHT:
                         player.speedx += 8
 
@@ -102,7 +101,7 @@ def jogo(tela):
             # Verifica se o player colidiu com algum objeto e roda a animação de explosão
             if len(hits) > 0 and power == False:
                 # som
-                # pegar.play()
+                 # pegar.play()
                 player.kill()
                 state = highscore
                 keys_down = {}
@@ -110,14 +109,14 @@ def jogo(tela):
                 sprites.add(explodindo)
                 explodindo_tick = pygame.time.get_ticks()
                 duracao = explodindo.frame_rate * len(explodindo.anim) + 400
-
+            
             # Verifica se o player colidiu com uma caixa e adiciona um ponto
             elif len(ponto) > 0:
                 # som
                 # pegar.play()
                 score += 1
                 caixa.kill()
-
+            
             # Verifica se o player colidiu com uma estrela e ativa o powerup
             elif len(powerup) > 0:
                 # som
@@ -138,7 +137,7 @@ def jogo(tela):
                 state = jogando
                 player = drone(grupos)
                 sprites.add(player)
-
+        
         # Desenhando meteoros
         sprites.draw(tela)
 
@@ -151,4 +150,5 @@ def jogo(tela):
         pygame.display.update()
         if state == 3:
             break
+    time.sleep(.5)
     return state, score

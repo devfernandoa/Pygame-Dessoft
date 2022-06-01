@@ -24,7 +24,6 @@ while state != Quit:
     elif state == Jogo:
         state, score = jogo(tela)
     elif state == Highscore:
-        time.sleep(1)
         state = hs(tela, score)
     elif state == End:
         state = end(tela)

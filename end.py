@@ -58,6 +58,10 @@ def end(tela):
     condicao = True
     while condicao:
         clock.tick(fps)
+
+        # Fadeout da musica do jogo
+        pygame.mixer.music.fadeout(5000)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state = Quit
