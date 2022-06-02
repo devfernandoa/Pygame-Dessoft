@@ -17,7 +17,7 @@ Insira seu nome no fim e tente bater o highscore do Humberto!
 
 ## Instruções:
 
-- É necessário baixar a biblioteca pygame (pelo 'comando pip install pygame') e a biblioteca random (pelo 'comando pip install random')
+- É necessário baixar a biblioteca pygame pelo ```comando pip install pygame``` e a biblioteca random pelo ```comando pip install random```
 - Para jogar o jogo rode o arquivo main.py, se mexa utilizando as setinhas e desvie de pedras!
 
 ## Erros Comuns
