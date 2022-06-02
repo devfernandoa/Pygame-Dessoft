@@ -2,8 +2,7 @@ Bem vindos(as) à
 
 # SynthRace
 
-https://www.youtube.com/watch?v=E_JPeEzK37A
-https://img.youtube.com/vi/E_JPeEzK37A/maxresdefault.jpg
+https://user-images.githubusercontent.com/28360583/171532017-7df1dd8a-a207-4e6b-8ada-60a1dfc9fa4f.mp4
 
 nesse jogo onde você está dirigindo um drone em uma cidade futurista que realmente odeia drones.
 Você deve desviar de pedras que estão sendo jogadas em você por pessoas com uma mira muito ruim
@@ -24,3 +23,10 @@ Insira seu nome no fim e tente bater o highscore do Humberto!
 
 - Se você não conseguir bater o highscore, tente novamente!
 - Caso de um erro com a 'libmpg123.dll' tente reinstalar o pygame pelo anaconda ao invés da instalação padrão da windows store!
+
+## Fontes
+- Caixa: https://br.pinterest.com/pin/618048748846078379/
+- Skyline: https://pixabay.com/vectors/skyline-cityscape-architecture-2730410/
+- Fundo: https://www.artstation.com/artwork/r9JYq2
+- Estrela: https://gifer.com/en/ZNec
+- Música: https://www.youtube.com/watch?v=v2ijawZHyS4 https://royaltyfreetube.com/category/loop
