@@ -29,4 +29,4 @@ Insira seu nome no fim e tente bater o highscore do Humberto!
 - Skyline: https://pixabay.com/vectors/skyline-cityscape-architecture-2730410/
 - Fundo: https://www.artstation.com/artwork/r9JYq2
 - Estrela: https://gifer.com/en/ZNec
-- Música: https://www.youtube.com/watch?v=v2ijawZHyS4 https://royaltyfreetube.com/category/loop
+- Música: https://www.youtube.com/watch?v=v2ijawZHyS4 https://royaltyfreetube.com/category/loop https://www.youtube.com/watch?v=MFtr4rw-dwI
