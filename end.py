@@ -46,21 +46,13 @@ def end(tela):
     texto_score2 = font.render("Highscore: {} - > {}".format(user2, score2), True, (255, 255, 255))
     texto_score3 = font.render("Highscore: {} - > {}".format(user3, score3), True, (255, 255, 255))
 
-    #Sons pra quando a gente tiver musicas
-    '''
-    # Carrega os sons do menu
-    pygame.mixer.music.load(path.join(sound_dir, "menu.ogg"))
-    pygame.mixer.music.set_volume(0.4)
-    pygame.mixer.music.play(loops=-1)
-    ''' 
-
     # Loop menu
     condicao = True
     while condicao:
         clock.tick(fps)
 
         # Fadeout da musica do jogo
-        pygame.mixer.music.fadeout(5000)
+        pygame.mixer.music.fadeout(1000)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

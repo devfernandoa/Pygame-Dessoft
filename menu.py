@@ -16,14 +16,6 @@ def menu(tela):
     texto4 = font.render("desvie de pedras", True, (255, 255, 255))
     texto5 = font.render("e pegue caixas!", True, (255, 255, 255))
 
-    #Sons pra quando a gente tiver musicas
-    '''
-    # Carrega os sons do menu
-    pygame.mixer.music.load(path.join(sound_dir, "menu.ogg"))
-    pygame.mixer.music.set_volume(0.4)
-    pygame.mixer.music.play(loops=-1)
-    '''
-
     condicao = True
 
     # Loop menu

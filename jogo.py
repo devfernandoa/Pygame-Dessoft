@@ -3,8 +3,11 @@ import time
 from classes import *
 from config import *
 
+
 def jogo(tela):
     clock = pygame.time.Clock()
+
+    som_powerup = pygame.mixer.Sound(path.join(sound_dir, "powerup.wav"))
 
     # Inicializa grupos
     sprites = pygame.sprite.Group()
@@ -16,7 +19,6 @@ def jogo(tela):
     grupos['objetos'] = objetos
     grupos['caixas'] = caixas
     grupos['estrelas'] = estrelas
-
 
     # Inicializa objetos
     bg = Background(tela)
@@ -41,7 +43,6 @@ def jogo(tela):
     tempo = 0
     tpower = 0
     power = False
-
 
     # Carrega os sons do jogo
     pygame.mixer.music.load(path.join(sound_dir, "jogo.mp3"))
@@ -77,7 +78,7 @@ def jogo(tela):
                     teclas[event.key] = True
                     # Movimenta o drone
                     if event.key == pygame.K_LEFT:
-                        player.speedx -= 8 
+                        player.speedx -= 8
                     if event.key == pygame.K_RIGHT:
                         player.speedx += 8
 
@@ -96,29 +97,31 @@ def jogo(tela):
             tempo += 1 / 60
 
             # Verifica se o colisões
-            hits = pygame.sprite.spritecollide(player, objetos, True, pygame.sprite.collide_mask)
-            ponto = pygame.sprite.spritecollide(player, caixas, True, pygame.sprite.collide_mask)
-            powerup = pygame.sprite.spritecollide(player, estrelas, True, pygame.sprite.collide_mask)
+            hits = pygame.sprite.spritecollide(
+                player, objetos, True, pygame.sprite.collide_mask)
+            ponto = pygame.sprite.spritecollide(
+                player, caixas, True, pygame.sprite.collide_mask)
+            powerup = pygame.sprite.spritecollide(
+                player, estrelas, True, pygame.sprite.collide_mask)
 
             # Verifica se o player colidiu com algum objeto e roda a animação de explosão
             if len(hits) > 0 and power == False:
                 # som
-                 # pegar.play()
+                # pegar.play()
                 player.kill()
                 state = highscore
-                keys_down = {}
                 explodindo = explodir(player.rect.center)
                 sprites.add(explodindo)
                 explodindo_tick = pygame.time.get_ticks()
                 duracao = explodindo.frame_rate * len(explodindo.anim) + 400
-            
+
             # Verifica se o player colidiu com uma caixa e adiciona um ponto
-            elif len(ponto) > 0:
+            elif len(ponto) > 0 or len(hits) > 0 and power == True:
                 # som
                 # pegar.play()
                 score += 1
                 caixa.kill()
-            
+
             # Verifica se o player colidiu com uma estrela e ativa o powerup
             elif len(powerup) > 0:
                 # som
@@ -128,6 +131,8 @@ def jogo(tela):
 
             # Conta a duração do powerup
             if power:
+                if tpower == 0:
+                    som_powerup.play()
                 tpower += 1/60
                 if tpower > powerup_duracao:
                     power = False
@@ -139,12 +144,13 @@ def jogo(tela):
                 state = jogando
                 player = drone(grupos)
                 sprites.add(player)
-        
+
         # Desenhando meteoros
         sprites.draw(tela)
 
         # Desenhando o score
-        text_surface = pygame.font.Font(os.path.join(font_dir, 'PressStart2P.ttf'), 28).render("{:08d}".format(round(score)), True, yellow)
+        text_surface = pygame.font.Font(os.path.join(font_dir, 'PressStart2P.ttf'), 28).render(
+            "{:08d}".format(round(score)), True, yellow)
         text_rect = text_surface.get_rect()
         text_rect.midtop = (width / 2,  10)
         tela.blit(text_surface, text_rect)
