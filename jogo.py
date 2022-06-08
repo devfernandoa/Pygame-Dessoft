@@ -116,11 +116,13 @@ def jogo(tela):
                 duracao = explodindo.frame_rate * len(explodindo.anim) + 400
 
             # Verifica se o player colidiu com uma caixa e adiciona um ponto
-            elif len(ponto) > 0 or len(hits) > 0 and power == True:
-                # som
-                # pegar.play()
+            elif len(ponto) > 0:
                 score += 1
                 caixa.kill()
+
+            # Verifica se durante o powerup o player colidiu com um objeto e adiciona um ponto
+            elif len(hits) > 0 and power == True:
+                score += 1
 
             # Verifica se o player colidiu com uma estrela e ativa o powerup
             elif len(powerup) > 0:
