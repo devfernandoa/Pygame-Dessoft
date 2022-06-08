@@ -67,6 +67,11 @@ def hs(tela, score):
                     else:
                         text += event.unicode
 
+                # Verifica condição para reiniciar o jogo
+                else:
+                    if event.key == pygame.K_r or event.key == pygame.K_SPACE:
+                        return Jogo
+
         # Desenha fundos e textos
         tela.fill(black)
         tela.blit(background, background_rect)
@@ -76,6 +81,7 @@ def hs(tela, score):
         width_text = max(200, txt_surface.get_width()+10)
         input_box.w = width_text
 
+        # Blit de informações
         tela.blit(txt_surface, (input_box.x+5, input_box.y+5))
         tela.blit(texto, (width/2 - texto.get_width()/2, height/2 - texto.get_height()- 50))
         tela.blit(texto_gameover, (width/2 - texto_gameover.get_width()/2, height/3 - texto_gameover.get_height()/2))

@@ -8,15 +8,15 @@ nesse jogo onde você está dirigindo um drone em uma cidade futurista que realm
 Você deve desviar de pedras que estão sendo jogadas em você por pessoas com uma mira muito ruim
 E ao mesmo tempo, para ganhar pontos, você deve coletar as caixas que as pessoas jogam em você.
 
-Você também pode pegar um powerup de estrela também que te deixa invulnerável a pedras
+Você também pode pegar um powerup de estrela também que te faz ganhar mais pontos ao coletar caixas e coletar pedras para ganhar pontos! Mas tome cuidado pois pegar as pedras pode fazer com que mais pedras venham em sua direção
 
-Insira seu nome no fim e tente bater o highscore do Humberto!
+Insira seu nome no fim e tente bater o highscore!
 
 ### O jogo foi feito por Fernando Alzueta, Ilana Finger e Luis Antonio Rodrigues
 
 ## Instruções:
 
-- É necessário baixar a biblioteca pygame pelo ```comando pip install pygame``` e a biblioteca random pelo ```comando pip install random```
+- É necessário baixar a biblioteca pygame pelo comando ```pip install pygame``` e a biblioteca random pelo comando ```pip install random```
 - Para jogar o jogo rode o arquivo main.py, se mexa utilizando as setinhas e desvie de pedras!
 
 ## Erros Comuns

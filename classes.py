@@ -46,6 +46,7 @@ class drone(pygame.sprite.Sprite):
         if keystate[pygame.K_DOWN]:
             self.speedy = 10
         
+        # Atualiza a imagem do drone
         if self.speedx == 0 and self.speedy == 0:
             self.image = self.image1
         elif self.speedx > 0:
@@ -79,14 +80,15 @@ class Objeto(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.y = random.randrange(0, width - obj_width)
         self.rect.x = random.randrange(-150, -obj_height)
-        self.speedx = random.randrange(-6, 6)
-        self.speedy = random.randrange(4, 18)
+        self.speedx = random.randrange(3, 6)
+        self.speedy = random.randrange(-2, 18)
         self.restrito = [4, -3, -2, -1, 0, 1, 2, 3, 4]
 
     def update(self, tempo):
         '''Atualiza a posição do objeto'''
         self.rect.x += self.speedx
         self.rect.y += self.speedy
+        # Verificando caso o objeto esteja muito devagar
         if self.rect.top > height or self.rect.right < 0 or self.rect.left > width or self.speedx in self.restrito or self.speedy in self.restrito:
             self.rect.y = random.randint(0, width - obj_width)
             self.rect.x = random.randint(-150, -obj_height)
@@ -94,7 +96,7 @@ class Objeto(pygame.sprite.Sprite):
             self.speedx = random.randint(4 - round(tempo / 10), 12 + round(tempo / 10))
         while self.speedx in self.restrito or self.speedy in self.restrito:
             self.speedy = random.randint(-4 - round(tempo / 10), 4 + round(tempo / 10))
-            self.speedx = random.randint(4 - round(tempo / 10), 12 + round(tempo / 10))
+            self.speedx = random.randint(4 + round(tempo / 10), 12 + round(tempo / 10))
 
 class Caixa(pygame.sprite.Sprite):
     '''Classe que gera a Caixa 
@@ -139,6 +141,8 @@ class Caixa(pygame.sprite.Sprite):
 
         self.rect.x += self.speedx
         self.rect.y += self.speedy
+
+        # Verificando caso a caixa esteja muito devagar
         if self.rect.top > height or self.rect.right < 0 or self.rect.left > width:
             self.rect.y = random.randint(0, width - obj_width)
             self.rect.x = random.randint(-200, -obj_height)
@@ -188,6 +192,8 @@ class Estrela(pygame.sprite.Sprite):
 
         self.rect.x += self.speedx
         self.rect.y += self.speedy
+
+        # Verificando caso a Estrela esteja muito devagar
         if self.rect.top > height or self.rect.right < 0 or self.rect.left > width:
             self.rect.y = random.randint(0, width - obj_width)
             self.rect.x = random.randint(-200, -obj_height)
