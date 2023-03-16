@@ -26,7 +26,7 @@ def jogo(tela):
     sprites.add(player)
 
     for i in range(8):
-        objeto = Objeto()
+        objeto = Pedra()
         objetos.add(objeto)
         sprites.add(objeto)
 
@@ -51,7 +51,7 @@ def jogo(tela):
     # Loop do jogo
     while state != 0 or state != 3:
         clock.tick(fps)
-        
+
         # Gerar uma caixa aleatoriamente
         if random.randrange(0, 120) == 69 and len(caixas) < 1:
             caixa = Caixa(player.rect.center)
@@ -115,7 +115,7 @@ def jogo(tela):
                 explodindo_tick = pygame.time.get_ticks()
                 duracao = explodindo.frame_rate * len(explodindo.anim) + 400
 
-            # Verifica se o player colidiu com uma caixa e adiciona um ponto ou dois 
+            # Verifica se o player colidiu com uma caixa e adiciona um ponto ou dois
             elif len(ponto) > 0:
                 # Verifica se o poder está ativo
                 if power:
@@ -129,15 +129,14 @@ def jogo(tela):
                 score += 1
                 # Chance aleatória de ao destruir uma pedra 2 virem no lugar
                 if random.randrange(0, 5) != 1:
-                    objeto = Objeto()
+                    objeto = Pedra()
                     objetos.add(objeto)
                     sprites.add(objeto)
                 else:
                     for i in range(2):
-                        objeto = Objeto()
+                        objeto = Pedra()
                         objetos.add(objeto)
                         sprites.add(objeto)
-
 
             # Verifica se o player colidiu com uma estrela e ativa o powerup
             elif len(powerup) > 0:
@@ -166,7 +165,8 @@ def jogo(tela):
         sprites.draw(tela)
 
         # Desenhando o score
-        text_surface = pygame.font.Font(os.path.join(font_dir, 'PressStart2P.ttf'), 28).render("{:08d}".format(round(score)), True, yellow)
+        text_surface = pygame.font.Font(os.path.join(font_dir, 'PressStart2P.ttf'), 28).render(
+            "{:08d}".format(round(score)), True, yellow)
         text_rect = text_surface.get_rect()
         text_rect.midtop = (width / 2,  10)
         tela.blit(text_surface, text_rect)
