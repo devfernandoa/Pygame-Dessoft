@@ -3,6 +3,23 @@ import time
 from classes import *
 from config import *
 
+def gerarAleatorio(caixas, estrelas, sprites, player, power):
+    if random.randrange(0, 120) == 69 and len(caixas) < 1:
+        caixa = Caixa(player.rect.center)
+        caixas.add(caixa)
+        sprites.add(caixa)
+
+        return caixas, estrelas, sprites, caixa, None
+
+    # Gera uma estrela aleatoriamente
+    if random.randrange(0, 1500) == 420 and len(estrelas) < 2 and power == False:
+        estrela = Estrela(player.rect.center)
+        estrelas.add(estrela)
+        sprites.add(estrela)
+
+        return caixas, estrelas, sprites, None, estrela
+
+    return caixas, estrelas, sprites, None, None
 
 def jogo(tela):
     clock = pygame.time.Clock()
@@ -52,17 +69,8 @@ def jogo(tela):
     while state != 0 or state != 3:
         clock.tick(fps)
 
-        # Gerar uma caixa aleatoriamente
-        if random.randrange(0, 120) == 69 and len(caixas) < 1:
-            caixa = Caixa(player.rect.center)
-            caixas.add(caixa)
-            sprites.add(caixa)
-
-        # Gera uma estrela aleatoriamente
-        if random.randrange(0, 1500) == 420 and len(estrelas) < 2 and power == False:
-            estrela = Estrela(player.rect.center)
-            estrelas.add(estrela)
-            sprites.add(estrela)
+        # Gerando caixas e estrelas aleatoriamente
+        caixas, estrelas, sprites, caixa, estrela = gerarAleatorio(caixas, estrelas, sprites, player, power)
 
         # Atualizar o fundo
         bg.update(power)
@@ -122,7 +130,6 @@ def jogo(tela):
                     score += 2
                 else:
                     score += 1
-                caixa.kill()
 
             # Verifica se durante o powerup o player colidiu com um objeto e adiciona um ponto
             elif len(hits) > 0 and power == True:
@@ -143,7 +150,6 @@ def jogo(tela):
                 # som
                 # powerup.play()
                 power = True
-                estrela.kill()
 
             # Conta a duração do powerup
             if power:
