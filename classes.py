@@ -67,7 +67,31 @@ class drone(pygame.sprite.Sprite):
         if self.rect.top < 0:
             self.rect.top = 0
 
-class Objeto(pygame.sprite.Sprite):
+
+class Objetos(pygame.sprite.Sprite):
+    def __init__(self, img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = img
+        self.image = pygame.transform.scale(self.image, (obj_width, obj_height))
+        self.rect = self.image.get_rect()
+        self.rect.y = random.randrange(0, width - obj_width)
+        self.rect.x = random.randrange(-200, -obj_height)
+        self.speedx = random.randrange(3, 6)
+        self.speedy = random.randrange(-2, 18)
+    
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+
+        # Verificando caso a Estrela esteja muito devagar
+        if self.rect.top > height or self.rect.right < 0 or self.rect.left > width:
+            self.rect.y = random.randint(0, width - obj_width)
+            self.rect.x = random.randint(-200, -obj_height)
+            self.speedy = random.randint(-6, 6)
+            self.speedx = random.randint(4, 18)
+
+
+class Pedra(Objetos):
     '''Classe que gera o objeto 
 
     Classe do tipo Sprite que representa o objeto que o jogador tem que desviar e suas variaveis. 
@@ -75,30 +99,18 @@ class Objeto(pygame.sprite.Sprite):
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join(img_dir, 'obj.png')).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (obj_width, obj_height))
-        self.rect = self.image.get_rect()
-        self.rect.y = random.randrange(0, width - obj_width)
-        self.rect.x = random.randrange(-150, -obj_height)
-        self.speedx = random.randrange(3, 6)
-        self.speedy = random.randrange(-2, 18)
+        self.img = pygame.image.load(os.path.join(img_dir, 'obj.png')).convert_alpha()
+        super().__init__(self.img)
         self.restrito = [4, -3, -2, -1, 0, 1, 2, 3, 4]
 
     def update(self, tempo):
         '''Atualiza a posição do objeto'''
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
-        # Verificando caso o objeto esteja muito devagar
-        if self.rect.top > height or self.rect.right < 0 or self.rect.left > width or self.speedx in self.restrito or self.speedy in self.restrito:
-            self.rect.y = random.randint(0, width - obj_width)
-            self.rect.x = random.randint(-150, -obj_height)
-            self.speedy = random.randint(-4 - round(tempo / 10), 4 + round(tempo / 10))
-            self.speedx = random.randint(4 - round(tempo / 10), 12 + round(tempo / 10))
+        super().update()
         while self.speedx in self.restrito or self.speedy in self.restrito:
             self.speedy = random.randint(-4 - round(tempo / 10), 4 + round(tempo / 10))
             self.speedx = random.randint(4 + round(tempo / 10), 12 + round(tempo / 10))
 
-class Caixa(pygame.sprite.Sprite):
+class Caixa(Objetos):
     '''Classe que gera a Caixa 
 
     Classe do tipo Sprite que representa o objeto que o jogador tem que pegar e suas variaveis. Trata também de fazer a animação da caixa girando
@@ -117,13 +129,9 @@ class Caixa(pygame.sprite.Sprite):
         self.image = self.anim[self.frame]  
         self.rect = self.image.get_rect()
         self.rect.center = center  
-
+        super().__init__(self.image)
         self.last_update = pygame.time.get_ticks()
         self.frame_rate = 50
-        self.rect.y = random.randrange(0, width - obj_width)
-        self.rect.x = random.randrange(-200, -obj_height)
-        self.speedx = random.randrange(-6, 6)
-        self.speedy = random.randrange(4, 18)
 
     def update(self, score):
         '''Atualiza a animação e posição da caixa'''
@@ -139,17 +147,9 @@ class Caixa(pygame.sprite.Sprite):
                 self.rect = self.image.get_rect()
                 self.rect.center = center
 
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
+        super().update()
 
-        # Verificando caso a caixa esteja muito devagar
-        if self.rect.top > height or self.rect.right < 0 or self.rect.left > width:
-            self.rect.y = random.randint(0, width - obj_width)
-            self.rect.x = random.randint(-200, -obj_height)
-            self.speedy = random.randint(-6, 6)
-            self.speedx = random.randint(4, 18)
-
-class Estrela(pygame.sprite.Sprite):
+class Estrela(Objetos):
     '''Classe que gera o powerup Estrela 
 
     Classe do tipo Sprite que representa o powerup que deixará o jogador invencível. Trata também de fazer a animação da estrela girando
@@ -165,16 +165,11 @@ class Estrela(pygame.sprite.Sprite):
             anim.append(img)
         self.anim = anim
         self.frame = 0 
-        self.image = self.anim[self.frame]  
-        self.rect = self.image.get_rect()
-        self.rect.center = center  
+        self.img = self.anim[self.frame]  
+        super().__init__(self.img)
 
         self.last_update = pygame.time.get_ticks()
         self.frame_rate = 50
-        self.rect.y = random.randrange(0, width - obj_width)
-        self.rect.x = random.randrange(-200, -obj_height)
-        self.speedx = random.randrange(-6, 6)
-        self.speedy = random.randrange(4, 18)
 
     def update(self, score):
         '''Atualiza a animação e posição da estrela'''
@@ -190,15 +185,7 @@ class Estrela(pygame.sprite.Sprite):
                 self.rect = self.image.get_rect()
                 self.rect.center = center
 
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
-
-        # Verificando caso a Estrela esteja muito devagar
-        if self.rect.top > height or self.rect.right < 0 or self.rect.left > width:
-            self.rect.y = random.randint(0, width - obj_width)
-            self.rect.x = random.randint(-200, -obj_height)
-            self.speedy = random.randint(-6, 6)
-            self.speedx = random.randint(4, 18)
+        super().update()
 
 class explodir(pygame.sprite.Sprite):
     '''Classe que gera a explosão

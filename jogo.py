@@ -3,6 +3,23 @@ import time
 from classes import *
 from config import *
 
+def gerarAleatorio(caixas, estrelas, sprites, player, power):
+    if random.randrange(0, 120) == 69 and len(caixas) < 1:
+        caixa = Caixa(player.rect.center)
+        caixas.add(caixa)
+        sprites.add(caixa)
+
+        return caixas, estrelas, sprites, caixa, None
+
+    # Gera uma estrela aleatoriamente
+    if random.randrange(0, 1500) == 420 and len(estrelas) < 2 and power == False:
+        estrela = Estrela(player.rect.center)
+        estrelas.add(estrela)
+        sprites.add(estrela)
+
+        return caixas, estrelas, sprites, None, estrela
+
+    return caixas, estrelas, sprites, None, None
 
 def jogo(tela):
     clock = pygame.time.Clock()
@@ -26,7 +43,7 @@ def jogo(tela):
     sprites.add(player)
 
     for i in range(8):
-        objeto = Objeto()
+        objeto = Pedra()
         objetos.add(objeto)
         sprites.add(objeto)
 
@@ -51,18 +68,9 @@ def jogo(tela):
     # Loop do jogo
     while state != 0 or state != 3:
         clock.tick(fps)
-        
-        # Gerar uma caixa aleatoriamente
-        if random.randrange(0, 120) == 69 and len(caixas) < 1:
-            caixa = Caixa(player.rect.center)
-            caixas.add(caixa)
-            sprites.add(caixa)
 
-        # Gera uma estrela aleatoriamente
-        if random.randrange(0, 1500) == 420 and len(estrelas) < 2 and power == False:
-            estrela = Estrela(player.rect.center)
-            estrelas.add(estrela)
-            sprites.add(estrela)
+        # Gerando caixas e estrelas aleatoriamente
+        caixas, estrelas, sprites, caixa, estrela = gerarAleatorio(caixas, estrelas, sprites, player, power)
 
         # Atualizar o fundo
         bg.update(power)
@@ -115,36 +123,33 @@ def jogo(tela):
                 explodindo_tick = pygame.time.get_ticks()
                 duracao = explodindo.frame_rate * len(explodindo.anim) + 400
 
-            # Verifica se o player colidiu com uma caixa e adiciona um ponto ou dois 
+            # Verifica se o player colidiu com uma caixa e adiciona um ponto ou dois
             elif len(ponto) > 0:
                 # Verifica se o poder está ativo
                 if power:
                     score += 2
                 else:
                     score += 1
-                caixa.kill()
 
             # Verifica se durante o powerup o player colidiu com um objeto e adiciona um ponto
             elif len(hits) > 0 and power == True:
                 score += 1
                 # Chance aleatória de ao destruir uma pedra 2 virem no lugar
                 if random.randrange(0, 5) != 1:
-                    objeto = Objeto()
+                    objeto = Pedra()
                     objetos.add(objeto)
                     sprites.add(objeto)
                 else:
                     for i in range(2):
-                        objeto = Objeto()
+                        objeto = Pedra()
                         objetos.add(objeto)
                         sprites.add(objeto)
-
 
             # Verifica se o player colidiu com uma estrela e ativa o powerup
             elif len(powerup) > 0:
                 # som
                 # powerup.play()
                 power = True
-                estrela.kill()
 
             # Conta a duração do powerup
             if power:
@@ -166,7 +171,8 @@ def jogo(tela):
         sprites.draw(tela)
 
         # Desenhando o score
-        text_surface = pygame.font.Font(os.path.join(font_dir, 'PressStart2P.ttf'), 28).render("{:08d}".format(round(score)), True, yellow)
+        text_surface = pygame.font.Font(os.path.join(font_dir, 'PressStart2P.ttf'), 28).render(
+            "{:08d}".format(round(score)), True, yellow)
         text_rect = text_surface.get_rect()
         text_rect.midtop = (width / 2,  10)
         tela.blit(text_surface, text_rect)
